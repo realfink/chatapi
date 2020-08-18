@@ -1,0 +1,380 @@
+openapi: 3.0.0
+x-generator: NSwag v13.5.0.0 (NJsonSchema v10.1.15.0 (Newtonsoft.Json v11.0.0.0))
+info:
+  title: Chat API
+  description: send Chat by sendBird
+  version: 1.0.0
+paths:
+  /api/Channels:
+    post:
+      tags:
+        - Channels
+      operationId: Channels_CreateChannel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateChannelDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateChannelDTO'
+        required: true
+        x-nullable: false
+      responses:
+        '201':
+          x-nullable: false
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - oauth2SecurityScheme:
+            - advanced
+  '/api/Channels/{channelID}/User/{userId}/PushNotificationsEnabled':
+    put:
+      tags:
+        - Channels
+      operationId: Channels_UpdateChannelPushNotificationEnabled
+      parameters:
+        - name: channelID
+          in: path
+          required: true
+          x-nullable: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          x-nullable: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: boolean
+          application/*+json:
+            schema:
+              type: boolean
+        required: true
+        x-nullable: false
+      responses:
+        '200':
+          x-nullable: false
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - oauth2SecurityScheme:
+            - advanced
+  '/api/Channels/{channelID}/User/{userId}':
+    get:
+      tags:
+        - Channels
+      operationId: Channels_GetUnreadChannelCountList
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          x-nullable: true
+          schema:
+            type: string
+        - name: channelID
+          in: path
+          required: true
+          x-nullable: true
+          schema:
+            type: string
+      responses:
+        '200':
+          x-nullable: false
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelUserDTO'
+        '400':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - oauth2SecurityScheme:
+            - basic
+  '/api/Channels/{channelID}/message':
+    post:
+      tags:
+        - Channels
+      operationId: Channels_SendMessage
+      parameters:
+        - name: channelID
+          in: path
+          required: true
+          x-nullable: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessageDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ChatMessageDTO'
+        required: true
+        x-nullable: false
+      responses:
+        '200':
+          x-nullable: false
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - oauth2SecurityScheme:
+            - advanced
+  /api/users:
+    post:
+      tags:
+        - Users
+      operationId: Users_CreateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+        x-nullable: false
+      responses:
+        '201':
+          x-nullable: false
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - oauth2SecurityScheme: []
+  '/api/users/{userId}/UnreadChannel':
+    get:
+      tags:
+        - Users
+      operationId: Users_GetUnreadChannelCount
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          x-nullable: true
+          schema:
+            type: string
+        - name: customTypes
+          in: query
+          x-nullable: true
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          x-nullable: false
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - oauth2SecurityScheme: []
+  '/api/users/{userId}/AccessToken':
+    get:
+      tags:
+        - Users
+      operationId: Users_GetAccessToken
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          x-nullable: true
+          schema:
+            type: string
+      responses:
+        '200':
+          x-nullable: false
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - oauth2SecurityScheme: []
+  '/api/users/{userId}/CheckExist':
+    get:
+      tags:
+        - Users
+      operationId: Users_CheckUserExist
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          x-nullable: true
+          schema:
+            type: string
+      responses:
+        '200':
+          x-nullable: false
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - oauth2SecurityScheme: []
+  '/api/users/{userId}/GetChannelByUsers/{secondUserId}':
+    get:
+      tags:
+        - Users
+      operationId: Users_GetChannelByUsers
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          x-nullable: true
+          schema:
+            type: string
+        - name: secondUserId
+          in: path
+          required: true
+          x-nullable: true
+          schema:
+            type: string
+      responses:
+        '200':
+          x-nullable: false
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: ''
+        '500':
+          description: ''
+      security:
+        - oauth2SecurityScheme:
+            - impossible
+servers:
+  - url: /chat
+components:
+  schemas:
+    CreateChannelDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        data:
+          type: string
+        userIds:
+          type: array
+          items:
+            type: string
+        channelId:
+          type: string
+    ChannelUserDTO:
+      type: object
+      required:
+        - unreadCount
+      properties:
+        channelID:
+          type: string
+        unreadCount:
+          type: integer
+          format: int32
+        userID:
+          type: string
+    ChatMessageDTO:
+      type: object
+      required:
+        - isAdminMessage
+      properties:
+        userId:
+          type: string
+        channelID:
+          type: string
+        userName:
+          type: string
+        message:
+          type: string
+        data:
+          type: string
+        customType:
+          type: string
+        isAdminMessage:
+          type: boolean
+    UserDTO:
+      type: object
+      properties:
+        userId:
+          type: string
+        nickname:
+          type: string
+        profileFile:
+          type: string
+          format: byte
+        fileName:
+          type: string
+        profileUrl:
+          type: string
+  securitySchemes:
+    oauth2SecurityScheme:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes: &ref_0
+            basic: Basic Permissions
+            advanced: Advanced Permissions
+            impossible: Impossible Permissions
+          authorizationUrl: 'https://rapaport.auth0.com/authorize'
+          tokenUrl: 'https://rapaport.auth0.com/oauth/token'
+        implicit:
+          scopes: *ref_0
+          authorizationUrl: 'https://rapaport.auth0.com/authorize'
+
